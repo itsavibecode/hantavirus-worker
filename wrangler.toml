@@ -1,0 +1,29 @@
+name = "hantavirus-worker"
+main = "src/index.js"
+compatibility_date = "2026-05-08"
+compatibility_flags = ["nodejs_compat"]
+
+# Cron: every 3 hours, at :05 past the hour to avoid the top-of-hour CF
+# congestion window. Adjust the schedule by editing this line and redeploying.
+[triggers]
+crons = ["5 */3 * * *"]
+
+# Firebase project ID is not a secret — it's the public identifier of the
+# Firestore database the SPA reads from.
+[vars]
+FIREBASE_PROJECT_ID = "hantavirus-monitor"
+
+# CORS — origins allowed to call the worker's HTTP endpoints.
+ALLOWED_ORIGINS = "https://bookhockeys.com,http://localhost:8091,http://127.0.0.1:8091"
+
+# Classifier knobs — overridable per-environment without code changes.
+CLASSIFIER_MODEL = "claude-haiku-4-5"
+CLASSIFIER_ENABLED = "true"
+
+# Hard limits per cron run, so a runaway feed doesn't blow through API budget.
+MAX_ITEMS_PER_RUN = "30"
+MAX_ITEMS_PER_SOURCE = "12"
+
+# Secrets are set via `wrangler secret put` and never live in this file or in source:
+#   wrangler secret put FIREBASE_SERVICE_ACCOUNT_JSON   # full JSON of the Firebase service account (from Project Settings → Service Accounts)
+#   wrangler secret put ANTHROPIC_API_KEY               # sk-ant-... from console.anthropic.com (Haiku classifier)

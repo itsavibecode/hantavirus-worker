@@ -1,0 +1,16 @@
+{
+  "name": "hantavirus-worker",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Cloudflare Worker that ingests hantavirus surveillance items from ProMED, Google News, WHO and state DOH RSS feeds; classifies them with Claude Haiku; writes normalised events to Firestore for the Hantavirus Monitor dashboard at bookhockeys.com/hantavirus.",
+  "type": "module",
+  "main": "src/index.js",
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy",
+    "tail": "wrangler tail"
+  },
+  "devDependencies": {
+    "wrangler": "^3.78.0"
+  }
+}
