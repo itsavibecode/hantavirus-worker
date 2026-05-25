@@ -3,6 +3,14 @@ main = "src/index.js"
 compatibility_date = "2026-05-08"
 compatibility_flags = ["nodejs_compat"]
 
+# Pin to the sevendwarfs Cloudflare account. The default wrangler auth
+# on this machine resolves to the umbrella account (frank@umbrellaautomation.com),
+# which would silently deploy to the wrong tenant. Pinning here makes
+# wrangler fail loudly with a clear "wrong account" error if the env
+# token isn't scoped to sevendwarfs. Run `cf sevendwarfs` (PowerShell
+# profile helper) before `npx wrangler deploy`.
+account_id = "fe16eca597b8d5afa20dfe7b2550640b"
+
 # Cron: every 3 hours, at :05 past the hour to avoid the top-of-hour CF
 # congestion window. Adjust the schedule by editing this line and redeploying.
 [triggers]
